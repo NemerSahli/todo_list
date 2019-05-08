@@ -1,0 +1,6 @@
+{
+  "BACKEND": "http://localhost:8000",
+  "HOST": "http://localhost:3000",
+  "MODE": "development",
+  "PORT": "8000"
+}
