@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import UpdateTask from './UpdateTask';
-import { deleteTask } from './../../../actions/tasksCrud';
+import { deleteTask, updateTask } from './../../../actions/tasksCrud';
 import { connect } from 'react-redux';
 
 class TasktoDo extends Component {
   state = {
     displayDescription: false,
     displayUpdateTask: false,
-    checked: false
+    checked: this.props.task.completed
   };
   onShowClick = () => {
     if (!this.state.displayUpdateTask)
@@ -18,6 +18,16 @@ class TasktoDo extends Component {
   };
 
   handleChange = name => event => {
+    console.log(this.state.checked, this.props.task._id);
+    let newTask = {
+      _id: this.props.task._id,
+      title: this.props.task.title,
+      description: this.props.task.description,
+      userId: this.props.task.userId,
+      completed: event.target.checked,
+      date: this.props.task.date
+    };
+    this.props.updateTask(this.props.task._id, newTask);
     this.setState({ [name]: event.target.checked });
   };
 
@@ -29,7 +39,7 @@ class TasktoDo extends Component {
   };
 
   render() {
-    const { task } = this.props;
+    const { task, dashed } = this.props;
     var options = {
       year: 'numeric',
       month: 'short',
@@ -41,6 +51,7 @@ class TasktoDo extends Component {
     mm = mm < 10 ? (mm = '0' + mm) : mm;
     date = date.toLocaleDateString('en-US', options);
     date = date + ', ' + hh + ':' + mm;
+
     return (
       <div className="col-12 card card-body mb-1 pl-4 pr-4 pt-2 pb-0 task">
         <div className="row justify-content-between">
@@ -51,7 +62,7 @@ class TasktoDo extends Component {
               value="checked"
             />
             <h5 className="mt-2">
-              {task.title}
+              {dashed ? <del>{task.title}</del> : task.title}
               <i
                 onClick={this.onShowClick}
                 className={
@@ -102,5 +113,5 @@ class TasktoDo extends Component {
 
 export default connect(
   null,
-  { deleteTask }
+  { deleteTask, updateTask }
 )(TasktoDo);

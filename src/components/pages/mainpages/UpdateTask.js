@@ -42,6 +42,7 @@ class UpdateTask extends Component {
       title: title,
       description: description,
       userId: this.props.task.userId,
+      completed: this.props.task.completed,
       date: this.props.task.date
     };
 

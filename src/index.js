@@ -10,11 +10,11 @@ import { Provider } from 'react-redux';
 
 const store = createStore(
   rootReducer,
-  compose(applyMiddleware(thunk))
-  // compose(
-  //   applyMiddleware(thunk),
-  //   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  // )
+  // compose(applyMiddleware(thunk))
+  compose(
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
 ); // the commented lines it is just a redux tool in google chrome not combatable with firefox;
 
 

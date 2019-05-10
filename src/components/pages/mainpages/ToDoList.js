@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import TasktoDo from './TasktoDo';
 import { loadTasks } from './../../../actions/tasksCrud';
@@ -9,6 +9,15 @@ class ToDoList extends Component {
   }
 
   render() {
+    const completedTasks = [];
+    const unCompletedTasks = [];
+    if (this.props.tasks) {
+      this.props.tasks.map(task => {
+        task.completed
+          ? completedTasks.push(<TasktoDo task={task} key={task._id} dashed={true} />)
+          : unCompletedTasks.push( <TasktoDo task={task} key={task._id} dashed={false}/>);
+      });
+    }
     return (
       <div className="pt-4">
         <div className="text-center mb-3">
@@ -23,9 +32,21 @@ class ToDoList extends Component {
 
         <div className="row">
           {this.props.tasks && this.props.tasks.length !== 0 ? (
-            this.props.tasks.map(task => {
+            <Fragment>
+              {/* {this.props.tasks.map(task => {
               return <TasktoDo task={task} key={task._id} />;
-            })
+            })} */}
+            {unCompletedTasks.length !== 0 ? (
+              <p className="text-muted">Uncompleted tasks</p>
+            ) : <p className="text-muted">Uncompleted tasks list empty!</p>}
+            
+              {unCompletedTasks}
+              <hr className="w-100" />
+              {completedTasks.length !== 0 ? (
+                <p className="text-muted">Completed tasks</p>
+              ) : <p className="text-muted">Completed tasks list empty!</p>}
+              {completedTasks}
+            </Fragment>
           ) : (
             <div className="container text-center">
               The list is empty please add your tasks

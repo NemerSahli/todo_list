@@ -38,6 +38,7 @@ router.post('/add/task', (req, res) => {
       userId: req.body.userId,
       title: req.body.title,
       description: req.body.description,
+      completed: false,
       date: new Date()
     };
 
@@ -61,12 +62,14 @@ router.put('/update/task/:id', (req, res) => {
     } catch (err) {
       if (err) return res.send({ error: err });
     }
+    console.log(req.body);
 
     // assign new values to update the doc.
     let newValues = {
       $set: {
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        completed: req.body.completed
       }
     };
 
