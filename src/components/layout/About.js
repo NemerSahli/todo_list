@@ -4,7 +4,7 @@ export default function About() {
 
   return (
     <div className="pt-5">
-      <h3 className="text-center mb-3">CouchHub code challenge</h3>
+      <h3 className="text-center mb-3">Code challenge</h3>
       <h5>Technical Requirements:</h5>
 
       <ul>
